@@ -42,11 +42,28 @@
           <div class="page-footer-desc">
             <york-title title="客户信息"/>
             <div class="page-footer-desc-con">
-              
+              <img class="page-third-logo" :src="imgLogo"/>
+              <div class="page-footer-desc-con-item">用户姓名：王先生</div>
+              <div class="page-footer-desc-con-item">设备型号：YVAG014RSE20</div>
+              <div class="page-footer-desc-con-item">开机时间：2019年7月14号</div>
+              <div class="page-footer-desc-con-item">供暖面积：150平方</div>
+              <div class="page-footer-desc-con-item">用户地址：春天华府XX幢XXX单元X室春天华府XX幢XXX单元X室春天华府XX幢XXX单元X室</div>
             </div>
           </div>
-          <div class="page-footer-show"></div>
-          <div class="page-footer-chart"></div>
+          <div class="page-footer-show">
+            <york-title title="主机设备性能"/>
+            <div class="page-footer-show-con">
+              <div class="top-chart"></div>
+              <div class="bottom-chart"></div>
+            </div>
+          </div>
+          <div class="page-footer-chart">
+            <york-title title="天耗电量"/>
+            <div class="page-footer-chart-con">
+              <div class="top-chart"></div>
+              <div class="bottom-chart"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
