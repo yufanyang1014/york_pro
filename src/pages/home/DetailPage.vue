@@ -1,30 +1,72 @@
 <template>
   <div class="page-third">
-    <div class="page-third-title">
-      <span class="page-third-title-name">约克空调智慧数据中心</span>
-      <span class="page-third-title-time">当前日期：{{timeNow}}</span>
+    <div>
+      <div class="page-third-title">
+          <span class="page-third-title-name">约克空调智慧数据中心</span>
+          <span class="page-third-title-time">当前日期：{{timeNow}}</span>
+      </div>
+      <div class="page-third-con">
+        <div class="page-body">
+          <div class="page-body-desc">
+            <div class="page-body-desc-con">
+              <img class="page-body-desc-con-qian" :src="imgQian"/>
+              <div class="page-body-desc-con-zq">
+                <span>中乾暖通</span>
+                <label>ZhongQian H.V.A.C</label>
+              </div>
+            </div>
+            <div class="page-body-desc-info">“临安中乾暖通是一家致力于暖通技术为核心，专业为中高端客户提供舒适生活整体解决方案的产品服务商，是临安唯一约克指定专卖店！”</div>
+            <div class="page-body-desc-params">成立时间：2012年</div>
+            <div class="page-body-desc-params">主        营：约克空调地暖二合一</div>
+            <div class="page-body-desc-params">公司地址：浙江省临安区锦城街道钱王街1057-1059号</div>
+          </div>
+          <div class="page-body-show">
+            
+          </div>
+          <div class="page-body-york">
+            <york-title title="主机参数"/>
+            <div class="page-body-york-con">
+              <img class="page-third-logo" :src="imgLogo"/>
+              <div class="page-body-york-con-key marTop">主机型号：YVAG014RSE20</div>
+              <div class="page-body-york-con-key">开机时间：2019年7月14日</div>
+              <div class="page-body-york-con-key">运行模式：制冷/制热</div>
+              <div class="page-body-york-con-key flexable">
+                <span>出水温度：5℃</span>
+                <span>回水温度：10℃</span>
+                <span>环境温度：10℃</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-footer">
+          <div class="page-footer-desc">
+            <york-title title="客户信息"/>
+            <div class="page-footer-desc-con">
+              
+            </div>
+          </div>
+          <div class="page-footer-show"></div>
+          <div class="page-footer-chart"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import imgLeft from '../../assets/images/left.png';
-import imgRight from '../../assets/images/right.png';
+import YorkTitle from './components/YorkTitle';
 import imgQian from '../../assets/images/qian.png';
 import imgLogo from '../../assets/images/logo.png';
-import { clearInterval } from 'timers';
 
 export default {
   components: {
-
+    YorkTitle,
   },
   props: {
     
   },
   data() {
     return {
-      imgLeft,
-      imgRight,
       imgQian,
       imgLogo,
       timeNow: '',
@@ -42,13 +84,13 @@ export default {
   },
   methods: {
     getTime(){     	//获取时间
-      var date = new Date();
-      var year = date.getFullYear();
-      var month = date.getMonth();
-      var day = date.getDate();
-      var hour = date.getHours();
-      var minute = date.getMinutes();
-      var second = date.getSeconds();
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth();
+      let day = date.getDate();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
 
       //这样写显示时间在1~9会挤占空间；所以要在1~9的数字前补零;
       if (hour<10) {
@@ -65,7 +107,7 @@ export default {
     },
     getNowTime() {
       this.getTime();
-      // this.timer = setInterval(() => { this.getTime() },1000);
+      this.timer = setInterval(() => { this.getTime() },1000);
     },
   },
 }
@@ -73,32 +115,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-  .page-third {
-    height: 100%;
-    min-width: 1200px;
-    background: url('../../assets/images/bg_3.png') no-repeat center;
-    background-size: 100% 100%;
-    &-title {
-      height: 104px;
-      background: url('../../assets/images/title.png') no-repeat center;
-      background-size: cover;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      &-name {
-        font-size: 40px;
-        font-weight: 400;
-        color: #ffffff;
-      }
-      &-time {
-        font-size: 18px;
-        font-weight: 400;
-        color: #ffffff;
-        position: absolute;
-        left: 30px;
-        top: 67px;
-      }
-    }
-  } 
+  @import url('./DetailPage.less');
 </style>
