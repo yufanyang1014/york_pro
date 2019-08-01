@@ -21,7 +21,21 @@
             <div class="page-body-desc-params">公司地址：浙江省临安区锦城街道钱王街1057-1059号</div>
           </div>
           <div class="page-body-show">
-            
+            <div class="online-total-con">
+              <div class="data-container">
+                <span>在线总量</span>
+                <label>3 0, 0 0 0, 0 0 0</label>
+                <em>运行在线</em>
+              </div>
+            </div>
+            <div class="hour-consume-con">
+              <label>小时耗电量</label>
+              <span>21,334,300</span>
+            </div>
+            <div class="day-consume-con">
+              <label>天耗电量</label>
+              <span>21,334,300</span>
+            </div>
           </div>
           <div class="page-body-york">
             <york-title title="主机参数"/>
@@ -54,14 +68,33 @@
             <york-title title="主机设备性能"/>
             <div class="page-footer-show-con">
               <div class="top-chart"></div>
-              <div class="bottom-chart"></div>
+              <york-title title="设备运行状态"/>
+              <div class="bottom-chart">
+                <div class="bottom-chart-table">
+                  <div class="table-th">
+                    <span>运行模式</span>
+                    <span>运行状态</span>
+                    <span>环境温度</span>
+                    <span>PM2.5浓度</span>
+                  </div>
+                  <div class="table-td">
+                    <span>制冷/制热</span>
+                    <span>开机</span>
+                    <span>27</span>
+                    <span>6</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="page-footer-chart">
             <york-title title="天耗电量"/>
             <div class="page-footer-chart-con">
               <div class="top-chart"></div>
-              <div class="bottom-chart"></div>
+              <york-title title="小时耗电量"/>
+              <div class="bottom-chart">
+                <charts/>
+              </div>
             </div>
           </div>
         </div>
@@ -74,9 +107,11 @@
 import YorkTitle from './components/YorkTitle';
 import imgQian from '../../assets/images/qian.png';
 import imgLogo from '../../assets/images/logo.png';
+import Charts from './components/Charts.vue'
 
 export default {
   components: {
+    Charts,
     YorkTitle,
   },
   props: {

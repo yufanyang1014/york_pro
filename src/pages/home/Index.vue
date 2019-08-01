@@ -2,10 +2,12 @@
   <div class="page-index">
     <div class="page-index-con">
       <img class="page-index-con-map" :src="imgMap"/>
+
       <div class="page-index-con-location" @click="navigatePage">
         <img :src="imgLocation"/>
         <h4>金禾嘉园20</h4>
       </div>
+      
     </div>
   </div>
 </template>
@@ -48,6 +50,20 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    @keyframes scaleDraw {  
+      0%{
+        transform: scale(1);  
+      }
+      25%{
+        transform: scale(1.1); 
+      }
+      50%{
+        transform: scale(1);
+      }
+      75%{
+        transform: scale(1.1);
+      }
+    }
     &-con {
       position: relative;
       &-map {
@@ -63,6 +79,10 @@ export default {
         img {
           width: 16px;
           height: 16px;
+          -webkit-animation-name: scaleDraw; 
+          -webkit-animation-timing-function: ease-in-out; 
+          -webkit-animation-iteration-count: infinite;  
+          -webkit-animation-duration: 5s;
         }
         h4 {
           font-size: 12px;

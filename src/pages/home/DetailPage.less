@@ -74,8 +74,71 @@
       }
       &-show {
         width: 666px;
-        height: 260px;
-        background: pink;
+        height: 250px;
+        background: url('../../assets/images/daily.png') no-repeat bottom center;
+        background-size: 605px 75px;
+        .online-total-con {
+          width: 595px;
+          height: 121px;
+          background: url('../../assets/images/online.png') no-repeat center;
+          background-size: cover;
+          margin: 0 auto;
+          margin-top: -46px;
+          .data-container {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 37px 0 47px;
+            span {
+              font-size: 23px;
+              color: #4FD9FC;
+            }
+            label {
+              font-size: 46px;
+              color: #EE4B4A;
+              font-weight: bold;
+              letter-spacing: -2px;
+            }
+            em {
+              font-size: 12px;
+              color: #4FD9FC;
+              margin-top: 30px;
+            }
+          }
+        }
+        .hour-consume-con {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding-top: 18px;
+          label {
+            font-size: 12px;
+            color: #4FD9FC;
+            padding-right: 18px;
+          }
+          span {
+            font-size: 27px;
+            color: #FED000;
+            letter-spacing: 2px;
+          }
+        }
+        .day-consume-con {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding-top: 10px;
+          label {
+            font-size: 12px;
+            color: #4FD9FC;
+            padding-right: 18px;
+          }
+          span {
+            font-size: 27px;
+            color: #41B135;
+            letter-spacing: 2px;
+          }
+        }
       }
       &-york {
         width: 348px;
@@ -107,6 +170,7 @@
       &-desc {
         width: 348px;
         &-con {
+          height: 324px;
           padding: 39px 29px;
           margin-top: 10px;
           border: 1px solid #1886FF;
@@ -121,7 +185,6 @@
       }
       &-show {
         width: 666px;
-        height: 260px;
         &-con {
           display: flex;
           flex-direction: column;
@@ -129,13 +192,46 @@
           margin-top: 10px;
           .top-chart {
             width: 100%;
-            height: 240px;
-            background: pink;
+            height: 220px;
+            margin-bottom: 10px;
+            border: 1px solid #1886FF;
           }
           .bottom-chart {
             width: 100%;
-            height: 169px;
-            background: red;
+            height: 140px;
+            margin-top: 10px;
+            border: 1px solid #1886FF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &-table {
+              width: 630px;
+              height: 100px;
+              // background: rgba(60,138,182,0.8);
+              // opacity: 0.2;
+              .table-th {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                color: #4FD9FC;
+                padding: 20px 0;
+                span {
+                  width: 25%;
+                  text-align: center;
+                }
+              }
+              .table-td {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                color: #ffffff;
+                padding: 15px 0;
+                span {
+                  width: 25%;
+                  text-align: center;
+                }
+              }
+            }
           }
         }
       }
@@ -148,13 +244,15 @@
           margin-top: 10px;
           .top-chart {
             width: 100%;
-            height: 240px;
-            background: pink;
+            height: 220px;
+            margin-bottom: 10px;
+            border: 1px solid #1886FF;
           }
           .bottom-chart {
             width: 100%;
-            height: 169px;
-            background: red;
+            height: 140px;
+            margin-top: 10px;
+            border: 1px solid #1886FF;
           }
         }
       }
