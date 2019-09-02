@@ -7,7 +7,7 @@
         <img :src="imgLocation"/>
         <h4>金禾嘉园20</h4>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -55,13 +55,13 @@ export default {
         transform: scale(1);  
       }
       25%{
-        transform: scale(1.1); 
+        transform: scale(1.15); 
       }
       50%{
         transform: scale(1);
       }
       75%{
-        transform: scale(1.1);
+        transform: scale(1.15);
       }
     }
     &-con {
