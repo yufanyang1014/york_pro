@@ -6,7 +6,6 @@
 import echarts from "echarts";
 import '../../../../node_modules/echarts/map/js/china';
 
-// import axios from 'axios';
 export default {
   name: 'Charts',
   props: {

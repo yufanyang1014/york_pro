@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { exchangeApi } from '../../service/home';
 import imgLocation from '../../assets/images/icon_location.png';
 import imgMap from '../../assets/images/map.png';
 
@@ -27,12 +28,21 @@ export default {
     return {
       imgMap,
       imgLocation,
+      list: [],
     }
   },
   mounted() {
-
+    this.getExchangeInfo();
   },
   methods: {
+    async getExchangeInfo() {
+      const params = {
+        request: 1,
+      };
+      const resData = await exchangeApi({ params });
+      if (resData.ErrorNo) { return }
+      this.list = resData.District;
+    },
     navigatePage() {
       this.$router.push({ name: 'location' });
     },
