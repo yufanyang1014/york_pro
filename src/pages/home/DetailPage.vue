@@ -24,7 +24,7 @@
             <div class="online-total-con">
               <div class="data-container">
                 <span>在线总量</span>
-                <label>3 0, 0 0 0, 0 0 0</label>
+                <label>{{total}}</label>
                 <em>运行在线</em>
               </div>
             </div>
@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import { exchangeApi } from '../../service/home';
 import YorkTitle from './components/YorkTitle';
 import imgQian from '../../assets/images/qian.png';
 import imgLogo from '../../assets/images/logo.png';
@@ -123,18 +124,37 @@ export default {
       imgLogo,
       timeNow: '',
       timer: null,
+      total: null,
+      list: {
+        ChillerData: {},
+        PowerData: {
+          DailyData: [],
+          HourData: [],
+        }
+      }
     }
   },
   created() {
     this.getNowTime();
   },
   mounted() {
-
+    this.getExchangeInfo();
   },
   destroyed() {
     clearInterval(this.timer);
   },
   methods: {
+    async getExchangeInfo() {
+      const { id, total } = this.$route.params;
+      const params = {
+        request: 3,
+        setID: id,
+      };
+      const resData = await exchangeApi({ params });
+      if (resData.ErrorNo) { return }
+      this.list = resData.Customer;
+      this.total = total;
+    },
     getTime(){     	//获取时间
       let date = new Date();
       let year = date.getFullYear();

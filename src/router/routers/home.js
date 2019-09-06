@@ -22,13 +22,13 @@ export default [
   // 第二页
   {
     name: `${prefiexName}location`,
-    path: `${prefiexRoute}location`,
+    path: `${prefiexRoute}location/:index/:total`,
     component: () => import('../../pages/home/LocationPage.vue'),
   },
     // 第三页
   {
     name: `${prefiexName}detail`,
-    path: `${prefiexRoute}detail`,
+    path: `${prefiexRoute}detail/:id/:total`,
     component: () => import('../../pages/home/DetailPage.vue'),
   },
 ];

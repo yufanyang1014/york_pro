@@ -1,19 +1,22 @@
 <template>
   <div class="page-second">
     <div class="page-second-con">
-      <h2 class="page-second-con-name">金禾嘉园20</h2>
+      <h2 class="page-second-con-name">{{DistrictName}}</h2>
       <div class="page-second-con-table">
         <div class="page-second-con-table-th">
           <div class="th-item" style="width: 450px">地址</div>
           <div class="th-item" style="width: 122px">姓名</div>
-          <div class="th-item" style="width: 450px">主机型号</div>
-          <div class="th-item" style="width: 100px">主机状态</div>
+          <div class="th-item" style="width: 430px">主机型号</div>
+          <div class="th-item" style="width: 120px">主机状态</div>
         </div>
-        <div class="page-second-con-table-tr" v-for="(item, idx) in mocData" :key="idx">
-          <div class="tr-item more" style="width: 450px" @click="navigatePage">{{item.address}}</div>
-          <div class="tr-item" style="width: 122px">{{item.name}}</div>
-          <div class="tr-item" style="width: 450px">{{item.ip}}</div>
-          <div class="tr-item" style="width: 100px"><img :src="item.status===1 ? imgOnline : imgOffline"/></div>
+        <div class="page-second-con-table-tr" v-for="(item, idx) in list" :key="idx">
+          <div class="tr-item more" style="width: 450px" @click="navigatePage(item.ID)">{{item.Address}}</div>
+          <div class="tr-item" style="width: 122px">{{item.Name}}</div>
+          <div class="tr-item" style="width: 430px">{{item.ChillerType}}</div>
+          <div class="tr-item" style="width: 120px">
+            <div v-if="item.Online !== ''" class="circle" :style="{ background: item.color }"></div>
+            <span>{{item.stateStr}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -21,8 +24,7 @@
 </template>
 
 <script>
-import imgOnline from '../../assets/images/icon_online.png';
-import imgOffline from '../../assets/images/icon_offline.png';
+import { exchangeApi } from '../../service/home';
 
 export default {
   components: {
@@ -33,78 +35,61 @@ export default {
   },
   data() {
     return {
-      imgOnline,
-      imgOffline,
-      mocData: [
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506财务室100234',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088jjjjjjk908760887882387wvewvwevwevwevw',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 2,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 1,
-        },
-        {
-          address: '杭州市临安市锦城街道金禾嘉园5幢1单元506',
-          name: '徐颖',
-          ip: 'x79783909877t8088',
-          status: 2,
-        },
-      ]
+      DistrictName: '',
+      list: [],
+      timer: null,
     }
   },
   mounted() {
-    
+    this.getExchangeInfo();
+  },
+  destroyed() {
+    clearInterval(this.timer);
   },
   methods: {
-    navigatePage() {
-      this.$router.push({ name: 'detail' });
+    async getExchangeInfo() {
+      const { index } = this.$route.params;
+      const params = {
+        request: 2,
+        setDistrictIndex: index,
+      };
+      const resData = await exchangeApi({ params });
+      if (resData.ErrorNo) { return }
+      this.DistrictName = resData.DistrictName;
+      const temp = resData.Customer;
+      temp.forEach(element => {
+        switch(element.Online) {
+          case '':
+            element.stateStr = '正在检测...';
+            break;
+          case 'On':
+            element.stateStr = '在线';
+            element.color = '#6bd23e';
+            break;
+          case 'Off':
+            element.stateStr = '不在线';
+            element.color = '#f51f47';
+            break;
+          default:  
+            element.stateStr = '无此设备';
+            element.color = '#999999';
+        }
+      });
+      this.list = temp;
+      this.intervalFun();
+    },
+    intervalFun() {
+      if (this.timer) { clearInterval(this.timer) }
+      const flag = this.list.some(item => item.Online === '');
+      if (flag) {
+        this.timer = setInterval(() => {
+        this.getExchangeInfo();
+      }, 3000)
+      }
+    },
+    navigatePage(id) {
+      const { total } = this.$route.params;
+      this.$router.push({ name: 'detail', params: { id, total } });
     },
   },
 }
@@ -152,15 +137,19 @@ export default {
           height: 63px;
           border-bottom: 1px solid #3B4172;
           .tr-item {
-            text-align: center;
             line-height: 63px;
             float: left;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            img {
-              width: 20px;
-              height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .circle {
+              width: 15px;
+              height: 15px;
+              border-radius: 50%;
+              margin-right: 5px;
             }
           }
           .more {

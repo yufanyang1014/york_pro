@@ -3,8 +3,9 @@ import axios from 'axios';
 const instance = axios.create({
   baseURL: '/api',
   timeout: 10000,
+  responseEncoding: 'utf8',
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+    "Content-Type": "application/x-www-form-urlencoded;charset=UTF8"
   }
 });
 
