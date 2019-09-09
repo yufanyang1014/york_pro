@@ -1,5 +1,5 @@
 <template>
-  <div :style="{height:'140px',width:'100%'}" ref="myEchart"></div>
+  <div :style="{height: height, width: width}" ref="myEchart"></div>
 </template>
 
 <script>
@@ -9,30 +9,74 @@ import '../../../../node_modules/echarts/map/js/china';
 export default {
   name: 'Charts',
   props: {
-    
+    width: {
+      type: String,
+      default: '',
+    },
+    height: {
+      type: String,
+      default: ''
+    },
+    xData: {
+      type: Array,
+      default: () => []
+    },
+    yData: {
+      type: Array,
+      default: () => []
+    },
+    type: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
       chart: null,
       myChart:'',
-      option: {
-        xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line'
-        }]
-      },
     };
   },
   mounted() {
     this.myChart = echarts.init(this.$refs.myEchart); //这里是为了获得容器所在位置
-    this.myChart.setOption(this.option);
+    const option = {
+      calculable : true,
+      xAxis: {
+          type: 'category',
+          axisLine:{
+            lineStyle:{
+              color:'#ffffff',
+            }
+          },
+          data: [...this.xData],
+      },
+      yAxis: {
+          type: 'value',
+          axisLine:{
+            lineStyle:{
+              color:'#ffffff',
+            }
+          },
+          splitLine :{    //网格线
+            lineStyle:{
+                type:'dashed',
+                color: '#fafafa',
+                opacity: 0.5
+            },
+          }
+
+      },
+      tooltip: {
+        show: true,
+      },
+      series: [{
+          data: [...this.yData],
+          type: this.type,
+          itemStyle: {
+            color: this.type === 'bar' ? 'rgb(0, 194, 255)' : 'rgb(160, 46, 68)',
+          }
+      }]
+    }
+    this.myChart.setOption(option);
     this.chartConfigure();
   },
   beforeDestroy() {

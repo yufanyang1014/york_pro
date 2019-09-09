@@ -29,25 +29,25 @@
               </div>
             </div>
             <div class="hour-consume-con">
-              <label>小时耗电量</label>
-              <span>21,334,300</span>
+              <label>客户小时耗电量</label>
+              <span>{{customerDay}}</span>
             </div>
             <div class="day-consume-con">
-              <label>天耗电量</label>
-              <span>21,334,300</span>
+              <label>客户天耗电量</label>
+              <span>{{customerHours}}</span>
             </div>
           </div>
           <div class="page-body-york">
             <york-title title="主机参数"/>
             <div class="page-body-york-con">
               <img class="page-third-logo" :src="imgLogo"/>
-              <div class="page-body-york-con-key marTop">主机型号：YVAG014RSE20</div>
-              <div class="page-body-york-con-key">开机时间：2019年7月14日</div>
-              <div class="page-body-york-con-key">运行模式：制冷/制热</div>
+              <div class="page-body-york-con-key marTop">主机型号：{{list.ChillerType}}</div>
+              <div class="page-body-york-con-key">开机时间：{{list.PilotRunDate}}</div>
+              <div class="page-body-york-con-key">运行状态：{{list.stateStr}}</div>
               <div class="page-body-york-con-key flexable">
-                <span>出水温度：5℃</span>
-                <span>回水温度：10℃</span>
-                <span>环境温度：10℃</span>
+                <span>出水温度：{{list.ChillerData.SysLCLT ? `${list.ChillerData.SysLCLT}℃` : '通信断'}}</span>
+                <span>回水温度：{{list.ChillerData.SysECLT ? `${list.ChillerData.SysECLT}℃` : '通信断'}}</span>
+                <span>环境温度：{{list.ChillerData.AmbT ? `${list.ChillerData.AmbT}℃` : '通信断'}}</span>
               </div>
             </div>
           </div>
@@ -57,30 +57,53 @@
             <york-title title="客户信息"/>
             <div class="page-footer-desc-con">
               <img class="page-third-logo" :src="imgLogo"/>
-              <div class="page-footer-desc-con-item">用户姓名：王先生</div>
-              <div class="page-footer-desc-con-item">设备型号：YVAG014RSE20</div>
-              <div class="page-footer-desc-con-item">开机时间：2019年7月14号</div>
-              <div class="page-footer-desc-con-item">供暖面积：150平方</div>
-              <div class="page-footer-desc-con-item">用户地址：春天华府XX幢XXX单元X室春天华府XX幢XXX单元X室春天华府XX幢XXX单元X室</div>
+              <div class="page-footer-desc-con-item">用户姓名：{{list.Name}}</div>
+              <div class="page-footer-desc-con-item">设备型号：{{list.ChillerType}}</div>
+              <div class="page-footer-desc-con-item">开机时间：{{list.PilotRunDate}}</div>
+              <div class="page-footer-desc-con-item">供暖面积：{{list.HeatingSize}}</div>
+              <div class="page-footer-desc-con-item">用户地址：{{list.Address}}</div>
             </div>
           </div>
           <div class="page-footer-show">
             <york-title title="主机设备性能"/>
             <div class="page-footer-show-con">
-              <div class="top-chart"></div>
+              <div class="top-chart">
+                <div class="top-chart-item">
+                  <Gauge  v-if="list.ChillerData.SysECLT > 0"
+                          :value="list.ChillerData.SysECLT"
+                          min="-40"
+                          max="150"/>
+                  <center class="no-data" v-else>通信断</center> 
+                  <center class="guage-title">主机回水温度</center>
+                </div>
+                <div class="top-chart-item">
+                  <Gauge v-if="list.ChillerData.SysLCLT > 0"
+                          :value="list.ChillerData.SysLCLT"
+                          min="-40"
+                          max="150"/>
+                  <center class="no-data" v-else>通信断</center> 
+                  <center class="guage-title">主机出水温度</center>
+                </div>
+                <div class="top-chart-item">
+                  <Gauge v-if="list.ChillerData.SysLoad > 0"
+                          :value="list.ChillerData.SysLoad"
+                          min="0"
+                          max="100"/>
+                  <center class="no-data" v-else>通信断</center>        
+                  <center class="guage-title">压缩机负载</center>
+                </div>
+              </div>
               <york-title title="设备运行状态"/>
               <div class="bottom-chart">
                 <div class="bottom-chart-table">
                   <div class="table-th">
-                    <span>运行模式</span>
                     <span>运行状态</span>
                     <span>环境温度</span>
                     <span>PM2.5浓度</span>
                   </div>
                   <div class="table-td">
-                    <span>制冷/制热</span>
-                    <span>开机</span>
-                    <span>27</span>
+                    <span>{{SystemStatus}}</span>
+                    <span>{{list.ChillerData.AmbT ? `${list.ChillerData.AmbT}℃` : '通信断'}}</span>
                     <span>6</span>
                   </div>
                 </div>
@@ -90,10 +113,22 @@
           <div class="page-footer-chart">
             <york-title title="天耗电量"/>
             <div class="page-footer-chart-con">
-              <div class="top-chart"></div>
+              <div class="top-chart">
+                <charts v-if="list.PowerData.DailyData.length > 0"
+                        width="100%" 
+                        height="100%" 
+                        type="bar" 
+                        :xData="list.PowerData.DailyXAxis"
+                        :yData="list.PowerData.DailyData"/>
+              </div>
               <york-title title="小时耗电量"/>
               <div class="bottom-chart">
-                <charts/>
+                <charts v-if="list.PowerData.HourData.length > 0"
+                        width="100%" 
+                        height="100%"
+                        type="line" 
+                        :xData="list.PowerData.HourXAxis"
+                        :yData="list.PowerData.HourData"/>
               </div>
             </div>
           </div>
@@ -108,10 +143,12 @@ import { exchangeApi } from '../../service/home';
 import YorkTitle from './components/YorkTitle';
 import imgQian from '../../assets/images/qian.png';
 import imgLogo from '../../assets/images/logo.png';
-import Charts from './components/Charts.vue'
+import Charts from './components/Charts.vue';
+import Gauge from './components/Gauge.vue'
 
 export default {
   components: {
+    Gauge,
     Charts,
     YorkTitle,
   },
@@ -124,15 +161,49 @@ export default {
       imgLogo,
       timeNow: '',
       timer: null,
+      timerTwo: null,
       total: null,
       list: {
-        ChillerData: {},
+        ChillerData: {
+          SysStatus: '',
+          SysLoad: 0, //压缩机载荷，单位-1%
+          SysECLT: 0, //主机进水温度，单位-℃
+          SysLCLT: 0, //主机出水温度，单位-℃
+        },
         PowerData: {
           DailyData: [],
+          DailyXAxis: [],
           HourData: [],
+          HourXAxis: [],
+        }
+      },
+    }
+  },
+  computed: {
+    SystemStatus() {
+      const { SysStatus } = this.list.ChillerData;
+      if (SysStatus === '') {
+        return '通信断';
+      } else {
+        if (SysStatus === 'ON') {
+          return '运行';
+        } else {
+          return '关机';
         }
       }
-    }
+    },
+    customerDay() {
+      let date = new Date();
+      let day = date.getDate();
+      const { DailyData } = this.list.PowerData;
+      return DailyData[day-1] ? `${DailyData[day]}kWh` : 0;
+    },
+    customerHours() {
+      let date = new Date();
+      let hour = date.getHours();
+      const { HourData } = this.list.PowerData;
+      return HourData[hour-1] ? `${HourData[hour]}kWh` : 0;
+    },
   },
   created() {
     this.getNowTime();
@@ -142,6 +213,7 @@ export default {
   },
   destroyed() {
     clearInterval(this.timer);
+    clearInterval(this.timerTwo);
   },
   methods: {
     async getExchangeInfo() {
@@ -152,8 +224,41 @@ export default {
       };
       const resData = await exchangeApi({ params });
       if (resData.ErrorNo) { return }
-      this.list = resData.Customer;
+      const temp = resData;
+      switch(temp.Online) {
+          case '':
+            temp.stateStr = '正在检测...';
+            break;
+          case 'On':
+            temp.stateStr = '在线';
+            break;
+          case 'Off':
+            temp.stateStr = '不在线';
+            break;
+          default:  
+            temp.stateStr = '无此设备';
+        }
+      this.list = temp;
+      this.list.PowerData.HourXAxis = this.list.PowerData.HourData.map((element, index) => {
+        return index + 1;
+      });
+      this.list.PowerData.DailyXAxis = this.list.PowerData.DailyData.map((element, index) => {
+        return index + 1;
+      });
+      // this.list.ChillerData.SysECLT = 40;
+      // this.list.ChillerData.SysLCLT = 80;
+      // this.list.ChillerData.SysLoad = 50;
       this.total = total;
+      this.intervalFun();
+    },
+    intervalFun() {
+      if (this.timerTwo) { clearInterval(this.timerTwo) }
+      const flag = this.list.Online === '';
+      if (flag) {
+        this.timerTwo = setInterval(() => {
+        this.getExchangeInfo();
+      }, 3000)
+      }
     },
     getTime(){     	//获取时间
       let date = new Date();
