@@ -24,17 +24,17 @@
             <div class="online-total-con">
               <div class="data-container">
                 <span>在线总量</span>
-                <label>{{total}}</label>
+                <label>{{addCommas(total)}}</label>
                 <em>运行在线</em>
               </div>
             </div>
             <div class="hour-consume-con">
               <label>客户小时耗电量</label>
-              <span>{{customerDay}}</span>
+              <span>{{addCommas(customerDay)}}</span>
             </div>
             <div class="day-consume-con">
               <label>客户天耗电量</label>
-              <span>{{customerHours}}</span>
+              <span>{{addCommas(customerHours)}}</span>
             </div>
           </div>
           <div class="page-body-york">
@@ -216,6 +216,17 @@ export default {
     clearInterval(this.timerTwo);
   },
   methods: {
+    addCommas(nStr) {
+      nStr += '';
+      let x = nStr.split('.');
+      let x1 = x[0];
+      let x2 = x.length > 1 ? '.' + x[1] : '';
+      var rgx = /(\d+)(\d{3})/;
+      while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+      }
+      return x1 + x2;
+    },
     async getExchangeInfo() {
       const { id, total } = this.$route.params;
       const params = {
