@@ -57,11 +57,26 @@
             <york-title title="客户信息"/>
             <div class="page-footer-desc-con">
               <img class="page-third-logo" :src="imgLogo"/>
-              <div class="page-footer-desc-con-item">用户姓名：{{list.Name}}</div>
-              <div class="page-footer-desc-con-item">设备型号：{{list.ChillerType}}</div>
-              <div class="page-footer-desc-con-item">开机时间：{{list.PilotRunDate}}</div>
-              <div class="page-footer-desc-con-item">供暖面积：{{list.HeatingSize}}</div>
-              <div class="page-footer-desc-con-item">用户地址：{{list.Address}}</div>
+              <div class="page-footer-desc-con-item">
+                <img class="icon-style" src="../../assets/images/icon/1@2x.png"/>
+                <span>用户姓名：{{list.Name}}</span>
+              </div>
+              <div class="page-footer-desc-con-item">
+                <img class="icon-style" src="../../assets/images/icon/2@2x.png"/>
+                <span>设备型号：{{list.ChillerType}}</span>
+              </div>
+              <div class="page-footer-desc-con-item">
+                <img class="icon-style" src="../../assets/images/icon/3@2x.png"/>
+                <span>开机时间：{{list.PilotRunDate}}</span>
+              </div>
+              <div class="page-footer-desc-con-item">
+                <img class="icon-style" src="../../assets/images/icon/4@2x.png"/>
+                <span>供暖面积：{{list.HeatingSize}}</span>
+              </div>
+              <div class="page-footer-desc-con-item">
+                <img class="icon-style" src="../../assets/images/icon/5@2x.png"/>
+                <span>用户地址：{{list.Address}}</span>
+              </div>
             </div>
           </div>
           <div class="page-footer-show">
