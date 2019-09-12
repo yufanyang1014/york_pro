@@ -3,7 +3,7 @@
     <div class="page-index-con">
       <div class="page-index-con-one">
         <div class="page-index-con-location" 
-            @click="navigatePage(item.Index)" 
+            @click="navigatePage(item)" 
             v-for="(item, index) in listOne.total" 
             :style="{top: `${listOne.xArr[index]}px`,left: `${listOne.yArr[index]}px`}"
             :key=index>
@@ -19,7 +19,7 @@
 
       <div class="page-index-con-two">
         <div class="page-index-con-location" 
-            @click="navigatePage(item.Index)" 
+            @click="navigatePage(item)" 
             v-for="(item, index) in listTwo.total" 
             :style="{top: `${listTwo.xArr[index]}px`,left: `${listTwo.yArr[index]}px`}"
             :key=index>
@@ -72,9 +72,9 @@ export default {
       this.listOne = this.createBubble(totalOne.length, totalOne, '.page-index-con-one', { width: 100, height: 60 });
       this.listTwo = this.createBubble(totalTwo.length, totalTwo, '.page-index-con-two', { width: 100, height: 60 });
     },
-    navigatePage(index) {
+    navigatePage(item) {
       const { TotalUnits } = this;
-      this.$router.push({ name: 'location', params: { index, total: TotalUnits } });
+      this.$router.push({ name: 'location', params: { index: item.Index, total: TotalUnits, quantity: item.Quantity } });
     },
     createBubble(num, total, ele, size){
       const iconWidth = size.width;   //值越大，元素左右间隔越大

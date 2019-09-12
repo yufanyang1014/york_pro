@@ -114,12 +114,12 @@
                   <div class="table-th">
                     <span>运行状态</span>
                     <span>环境温度</span>
-                    <span>PM2.5浓度</span>
+                    <span>风速</span>
                   </div>
                   <div class="table-td">
                     <span>{{SystemStatus}}</span>
                     <span>{{list.ChillerData.AmbT ? `${list.ChillerData.AmbT}℃` : '通信断'}}</span>
-                    <span>6</span>
+                    <span>{{weatherInfo.WS}}</span>
                   </div>
                 </div>
               </div>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { exchangeApi } from '../../service/home';
+import { exchangeApi, weatherApi } from '../../service/home';
 import YorkTitle from './components/YorkTitle';
 import imgQian from '../../assets/images/qian.png';
 import imgLogo from '../../assets/images/logo.png';
@@ -178,6 +178,7 @@ export default {
       timer: null,
       timerTwo: null,
       total: null,
+      weatherInfo: {},
       list: {
         ChillerData: {
           SysStatus: '',
@@ -225,12 +226,17 @@ export default {
   },
   mounted() {
     this.getExchangeInfo();
+    this.getWeatherInfo();
   },
   destroyed() {
     clearInterval(this.timer);
     clearInterval(this.timerTwo);
   },
   methods: {
+    async getWeatherInfo() {
+      const resData = await weatherApi();
+      this.weatherInfo = resData.weatherinfo;
+    },
     addCommas(nStr) {
       nStr += '';
       let x = nStr.split('.');

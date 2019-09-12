@@ -22,7 +22,7 @@ export default [
   // 第二页
   {
     name: `${prefiexName}location`,
-    path: `${prefiexRoute}location/:index/:total`,
+    path: `${prefiexRoute}location/:index/:total/:quantity`,
     component: () => import('../../pages/home/LocationPage.vue'),
   },
     // 第三页

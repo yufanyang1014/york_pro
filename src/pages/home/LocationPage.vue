@@ -1,7 +1,7 @@
 <template>
   <div class="page-second">
     <div class="page-second-con">
-      <h2 class="page-second-con-name">{{DistrictName}}</h2>
+      <h2 class="page-second-con-name">{{DistrictName}} {{quantity}}</h2>
       <div class="page-second-con-table">
         <div class="page-second-con-table-th">
           <div class="th-item" style="width: 450px">地址</div>
@@ -38,6 +38,7 @@ export default {
       DistrictName: '',
       list: [],
       timer: null,
+      quantity: null,
     }
   },
   mounted() {
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     async getExchangeInfo() {
-      const { index } = this.$route.params;
+      const { index, quantity } = this.$route.params;
       const params = {
         request: 2,
         setDistrictIndex: index,
@@ -76,6 +77,7 @@ export default {
         }
       });
       this.list = temp;
+      this.quantity = quantity;
       this.intervalFun();
     },
     intervalFun() {

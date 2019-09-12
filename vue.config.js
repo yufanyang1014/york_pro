@@ -12,6 +12,14 @@ module.exports = {
           '^/api/': '',
         },
       },
+      '/data': {
+        target: 'http://www.weather.com.cn',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/data/': '',
+        },
+      },
     },
   },
   pluginOptions: {

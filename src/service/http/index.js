@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: '/api',
+  baseURL: '',
   timeout: 10000,
   responseEncoding: 'utf8',
   headers: {
@@ -11,6 +11,11 @@ const instance = axios.create({
 
 // 拦截 request
 instance.interceptors.request.use((request) => {
+  if (request.url.indexOf(101210101) > -1) {
+    request.baseURL = '/data'
+  } else {
+    request.baseURL = '/api'
+  }
   return request;
 }, error => Promise.reject(error));
 
