@@ -271,20 +271,14 @@ export default {
       this.list.PowerData.DailyXAxis = this.list.PowerData.DailyData.map((element, index) => {
         return index + 1;
       });
-      // this.list.ChillerData.SysECLT = 40;
-      // this.list.ChillerData.SysLCLT = 80;
-      // this.list.ChillerData.SysLoad = 50;
       this.total = total;
       this.intervalFun();
     },
     intervalFun() {
       if (this.timerTwo) { clearInterval(this.timerTwo) }
-      const flag = this.list.Online === '';
-      if (flag) {
-        this.timerTwo = setInterval(() => {
+      this.timerTwo = setInterval(() => {
         this.getExchangeInfo();
-      }, 3000)
-      }
+      }, 5000)
     },
     getTime(){     	//获取时间
       let date = new Date();

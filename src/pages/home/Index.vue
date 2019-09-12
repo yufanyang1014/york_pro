@@ -10,9 +10,9 @@
           <img :src="imgLocation"/>
           <Tooltip placement="bottom" >
             <template slot="title">
-              <span>{{item.Name}}{{item.Quantity}}</span>
+              <span>{{item.Name}} {{item.Quantity}}</span>
             </template>
-            <h4>{{item.Name}}{{item.Quantity}}</h4>
+            <h4>{{item.Name}} {{item.Quantity}}</h4>
           </Tooltip>
         </div>
       </div>
