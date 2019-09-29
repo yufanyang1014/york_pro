@@ -45,8 +45,8 @@
               <div class="page-body-york-con-key">开机时间：{{list.PilotRunDate}}</div>
               <div class="page-body-york-con-key">运行状态：{{list.stateStr}}</div>
               <div class="page-body-york-con-key flexable">
-                <span>出水温度：{{list.ChillerData.SysLCLT ? `${list.ChillerData.SysLCLT}℃` : '通信断'}}</span>
                 <span>回水温度：{{list.ChillerData.SysECLT ? `${list.ChillerData.SysECLT}℃` : '通信断'}}</span>
+                <span>出水温度：{{list.ChillerData.SysLCLT ? `${list.ChillerData.SysLCLT}℃` : '通信断'}}</span>
                 <span>环境温度：{{list.ChillerData.AmbT ? `${list.ChillerData.AmbT}℃` : '通信断'}}</span>
               </div>
             </div>
@@ -84,27 +84,30 @@
             <div class="page-footer-show-con">
               <div class="top-chart">
                 <div class="top-chart-item">
-                  <Gauge  v-if="list.ChillerData.SysECLT > 0"
+                  <Gauge v-if="list.ChillerData.SysECLT !== null"
                           :value="list.ChillerData.SysECLT"
                           min="-40"
-                          max="150"/>
-                  <center class="no-data" v-else>通信断</center> 
+                          max="150"
+                          ref="myGaugeOne"/>
+                  <center class="no-data" v-else>通信断</center>
                   <center class="guage-title">主机回水温度</center>
                 </div>
                 <div class="top-chart-item">
-                  <Gauge v-if="list.ChillerData.SysLCLT > 0"
+                  <Gauge v-if="list.ChillerData.SysLCLT !== null"
                           :value="list.ChillerData.SysLCLT"
                           min="-40"
-                          max="150"/>
-                  <center class="no-data" v-else>通信断</center> 
+                          max="150"
+                          ref="myGaugeTwo"/>
+                  <center class="no-data" v-else>通信断</center>
                   <center class="guage-title">主机出水温度</center>
                 </div>
                 <div class="top-chart-item">
-                  <Gauge v-if="list.ChillerData.SysLoad > 0"
-                          :value="list.ChillerData.SysLoad"
+                  <Gauge v-if="list.ChillerData.SysLoad !== null"
+                          :value="list.ChillerData.SysLoad * 10"
                           min="0"
-                          max="100"/>
-                  <center class="no-data" v-else>通信断</center>        
+                          max="100"
+                          ref="myGaugeThree"/>
+                  <center class="no-data" v-else>通信断</center>
                   <center class="guage-title">压缩机负载</center>
                 </div>
               </div>
@@ -182,9 +185,9 @@ export default {
       list: {
         ChillerData: {
           SysStatus: '',
-          SysLoad: 0, //压缩机载荷，单位-1%
-          SysECLT: 0, //主机进水温度，单位-℃
-          SysLCLT: 0, //主机出水温度，单位-℃
+          SysLoad: null, //压缩机载荷，单位-1%
+          SysECLT: null, //主机进水温度，单位-℃
+          SysLCLT: null, //主机出水温度，单位-℃
         },
         PowerData: {
           DailyData: [],
@@ -278,6 +281,11 @@ export default {
         return index + 1;
       });
       this.total = total;
+      this.$nextTick(() => {
+        this.$refs['myGaugeOne'].paintGauge();
+        this.$refs['myGaugeTwo'].paintGauge();
+        this.$refs['myGaugeThree'].paintGauge();
+      })
       this.intervalFun();
     },
     intervalFun() {

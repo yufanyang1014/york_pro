@@ -10,7 +10,7 @@
           <img :src="imgLocation"/>
           <Tooltip placement="bottom" >
             <template slot="title">
-              <span>{{item.Name}} {{item.Quantity}}</span>
+              <span>小区名: {{item.Name}}<br/>用户数: {{item.Quantity}}</span>
             </template>
             <h4>{{item.Name}} {{item.Quantity}}</h4>
           </Tooltip>
@@ -26,7 +26,7 @@
           <img :src="imgLocation"/>
           <Tooltip placement="bottom" >
             <template slot="title">
-              <span>{{item.Name}}{{item.Quantity}}</span>
+              <span>小区名: {{item.Name}}<br/>用户数: {{item.Quantity}}</span>
             </template>
             <h4>{{item.Name}}{{item.Quantity}}</h4>
           </Tooltip>
