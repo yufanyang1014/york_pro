@@ -122,7 +122,7 @@ export default {
   .page-index {
     height: 100%;
     min-width: 1200px;
-    background: url('../../assets/images/bg_1.png') no-repeat center;
+    background: url('https://image.ibuycoinamc.com/uploads/shop/20200320/7362325a53ae520592af9d9a499587bc72226.png') no-repeat center;
     background-size: 100% 100%;
     display: flex;
     align-items: center;

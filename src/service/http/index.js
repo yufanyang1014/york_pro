@@ -21,6 +21,9 @@ instance.interceptors.request.use((request) => {
 
 // 拦截 response
 instance.interceptors.response.use((response) => {
+  // OPTIONS请求方法的用途：
+  // 1. 用来获取服务器支持http的请求方式
+  // 2. 用来检测服务器的性能
   if (response.config.method.toLowerCase() === 'options') return false;
   if (response.status !== 200) {
     return Promise.reject();

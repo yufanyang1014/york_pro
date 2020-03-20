@@ -102,7 +102,7 @@ export default {
   .page-second {
     height: 100%;
     min-width: 1200px;
-    background: url('../../assets/images/bg_2.png') no-repeat center;
+    background: url('https://image.ibuycoinamc.com/uploads/shop/20200320/867917ab538384af4a91f024c4fc6bd376473.png') no-repeat center;
     background-size: 100% 100%;
     display: flex;
     justify-content: center;
