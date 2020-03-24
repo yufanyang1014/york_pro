@@ -1,8 +1,13 @@
+
+const {NODE_ENV} = process.env;
+console.log(NODE_ENV);
+const publicPath =  NODE_ENV==='production'? '//www.hzyork.com': '/';
+
+
 module.exports = {
   devServer: {
+    publicPath,
     open: true,
-    host: "0.0.0.0",
-    port: 8989,
     proxy: {
       '/api': {
         target: 'http://121.40.188.9:40000',
@@ -11,6 +16,9 @@ module.exports = {
         pathRewrite: {
           '^/api/': '',
         },
+        cookiePathRewrite: {
+          '/': '/api/',
+        },
       },
       '/data': {
         target: 'http://www.weather.com.cn',
@@ -18,6 +26,9 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '^/data/': '',
+        },
+        cookiePathRewrite: {
+          '/': '/data/',
         },
       },
     },

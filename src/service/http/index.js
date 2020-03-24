@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const baseURL = process&&process.env&&process.env.NODE_ENV==='production'?'http://121.40.188.9:40000':'/api';
 const instance = axios.create({
-  baseURL: '',
+  baseURL,
   timeout: 10000,
   responseEncoding: 'utf8',
   headers: {
@@ -11,11 +12,6 @@ const instance = axios.create({
 
 // 拦截 request
 instance.interceptors.request.use((request) => {
-  if (request.url.indexOf(101210101) > -1) {
-    request.baseURL = '/data'
-  } else {
-    request.baseURL = '/api'
-  }
   return request;
 }, error => Promise.reject(error));
 
