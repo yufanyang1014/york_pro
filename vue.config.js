@@ -1,7 +1,11 @@
 
 const {NODE_ENV} = process.env;
-console.log(NODE_ENV);
+const path = require('path');
 const publicPath =  NODE_ENV==='production'? '//www.hzyork.com': '/';
+
+const webpack = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
 
 
 module.exports = {
@@ -39,4 +43,27 @@ module.exports = {
       patterns: []
     }
   },
+  configureWebpack:{
+    resolve: {
+      alias: {
+        vue$: 'vue/dist/vue.esm.js',
+        '@': path.join(__dirname, '..', 'src'),
+      },
+    },
+    plugins: [
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      
+      // 下面是下载的插件的配置
+      new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      }),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 5, 
+        minChunkSize: 100
+      })
+    ]
+  }
 }
