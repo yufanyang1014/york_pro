@@ -10,7 +10,7 @@
           <div class="th-item" style="width: 120px">主机状态</div>
         </div>
         <div class="page-second-con-table-tr" v-for="(item, idx) in list" :key="idx">
-          <div class="tr-item more" style="width: 450px" @click="navigatePage(item.ID)">{{item.Address}}</div>
+          <div class="tr-item more" style="width: 450px" @click="navigatePage(item.ID)">{{item.Address}} ></div>
           <div class="tr-item" style="width: 122px">{{item.Name}}</div>
           <div class="tr-item" style="width: 430px">{{item.ChillerType}}</div>
           <div class="tr-item" style="width: 120px">

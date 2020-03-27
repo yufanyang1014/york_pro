@@ -122,7 +122,7 @@
                   <div class="table-td">
                     <span>{{SystemStatus}}</span>
                     <span>{{list.ChillerData.AmbT ? `${list.ChillerData.AmbT}℃` : '通信断'}}</span>
-                    <span>{{weatherInfo.WS}}</span>
+                    <span>小于3级</span>
                   </div>
                 </div>
               </div>
@@ -181,7 +181,9 @@ export default {
       timer: null,
       timerTwo: null,
       total: null,
-      weatherInfo: {},
+      weatherInfo: {
+        WS: '小于3级'
+      },
       list: {
         ChillerData: {
           SysStatus: '',
@@ -229,7 +231,7 @@ export default {
   },
   mounted() {
     this.getExchangeInfo();
-    this.getWeatherInfo();
+    // this.getWeatherInfo();
   },
   destroyed() {
     clearInterval(this.timer);
