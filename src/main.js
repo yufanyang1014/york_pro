@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import { Tooltip } from "ant-design-vue";
+import 'ant-design-vue/lib/tooltip/style/css'
 import './registerServiceWork';
+
+Vue.component(Tooltip.name, Tooltip);
 
 Vue.config.productionTip = false;
 
-Vue.use(Antd)
 
 new Vue({
   router,
